@@ -1,0 +1,24 @@
+@import "tailwindcss";
+*{
+margin : 0;
+padding:0;
+box-sizing: border-box;
+}
+html,body {
+width: 100%;
+height:100%;
+}
+
+form input{
+    border: solid 1px black ;
+    padding: 10px;
+}
+
+form button{
+    
+    padding:10px;
+    margin-left: 10px;
+}
+.App{
+    padding: 10px;
+}
