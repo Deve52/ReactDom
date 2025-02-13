@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+input,button{
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 5px;
+    width:30vw
+}
+
+#root{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    /* background-color: rgb(203, 172, 172); */
+}
