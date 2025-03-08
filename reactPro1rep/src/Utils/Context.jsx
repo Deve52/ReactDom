@@ -5,25 +5,25 @@ export const UserContext= createContext();
 
 const Context = ({children}) => {
 
-    const [products, setproducts] = useState(null);
+    const [products, setproducts] = useState(JSON.parse(localStorage.getItem("products"))||null);
 
-    let getData=async ()=>{
-        try {
-            const {data} = await axios("/products") 
-        setproducts(data)
+    // let getData=async ()=>{
+    //     try {
+    //         const {data} = await axios("/products") 
+    //     setproducts(data)
         
         
             
-        } catch (error) {
-            console.log("error");
+    //     } catch (error) {
+    //         console.log("error");
             
             
-        }
-    }
+    //     }
+    // }
 
-    useEffect(()=>{
-        getData()
-    },[])
+    // useEffect(()=>{
+    //     getData()
+    // },[])
 
   return (
     <div>

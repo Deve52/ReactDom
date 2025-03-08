@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import AxiosInstance from "../Utils/Axios";
 import Loading from "./Loading";
+import { UserContext } from "../Utils/Context";
+import { toast } from "react-toastify";
 
 const Details = () => {
+   
+  let navigate= useNavigate()
+  let [products,setProducts]=useContext(UserContext)
+
   let { id } = useParams();
   //   console.log(id);
 
@@ -22,13 +28,35 @@ const Details = () => {
   };
 
   useEffect(() => {
-    getOneData();
+    if(!OneProduct){
+      setOneProduct(products.filter(p => p.id == id)[0])
+      
+    }
+  // -------it will give array👆------ indexno.
+    // getOneData();
   }, []);
 
+  
+  
+  let deleteHanddler = (id)=>{
+    let response= confirm("Do you really want to delete it?")
+
+  
+  if(response){
+
+    let filteredProducts= products.filter(p=>p.id!=id)
+     setProducts(filteredProducts)
+     localStorage.setItem("products",JSON.stringify(filteredProducts))
+     navigate("/")
+     toast.success("Item Deleted")
+  }
+  
+  }
+
   return (
-    <div className="w-full h-screen py-5 overflow-y-auto ">
+    <div className="w-full h-screen py-5 overflow-y-hidden ">
       
-       {OneProduct ?  <div className=" w-[70vw] h-screen  mx-auto flex justify-center items-center gap-16 ">
+       {OneProduct ?  <div className=" w-[70vw] h-screen  mx-auto  flex justify-center items-center gap-16 ">
         <img
           className="h-[50%]"
           src={OneProduct.image}
@@ -42,17 +70,17 @@ const Details = () => {
             {OneProduct.category}
           </h4>
           <h2 className="text-red-300 text-xl mb-3">${OneProduct.price}</h2>
-          <p className="font-light text-lg mb-10">
+          <p className="font-light  mb-10">
             {OneProduct.description}
           </p>
-          <Link className="text-2xl px-3 py-1 border-solid border-blue-200 border-1 text-blue-200">
+          <Link to={`/edit/${OneProduct.id}`} className="text-2xl px-3 py-1 border-solid border-blue-200 border-1 text-blue-200">
             {" "}
             Edit
           </Link>
-          <Link className="text-2xl ml-3 px-3 py-1 border-solid border-red-200 border-1 text-red-200">
+          <button onClick={()=>deleteHanddler(OneProduct.id)} className="text-2xl ml-3 px-3 py-1 border-solid border-red-200 border-1 text-red-200">
             {" "}
             Delete
-          </Link>
+          </button>
         </div>
       </div>
         : <Loading/>}
